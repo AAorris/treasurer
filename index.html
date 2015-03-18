@@ -91,12 +91,11 @@
     });
     
     Keen.ready(function(){
-      var query = new Keen.Query("count", {
-        eventCollection: "suggestions"
-      });
-      client.draw(query, document.getElementById("suggestionChart"), {
-        // Custom configuration here
-      });
+      client.draw(
+	  	new Keen.Query("count", {eventCollection: "suggestions"}),
+		document.getElementById("suggestionChart"),
+		{}
+	  );
 	  
 	  var total_visits = new Keen.Query("count", {
 		eventCollection: "visits",
@@ -122,9 +121,14 @@
       $scope.suggestion = { name: "", suggestion: "" }
 	  $scope.suggestions = [];
       $scope.suggest = function() {
-        keen: { timestamp: new Date().toISOString() };
-        client.addEvent("sugestions", angular.extend({}, $scope.suggestion, keen));
+        keen = { timestamp: new Date().toISOString() };
+        client.addEvent("suggestions", angular.extend({}, $scope.suggestion, keen));
         alert("Thanks for your suggestion, "+$scope.suggestion.name+"!");
+		client.draw(
+			new Keen.Query("count", {eventCollection: "suggestions"}),
+			document.getElementById("suggestionChart"),
+			{}
+		  );
       }
     }]);
   </script>
