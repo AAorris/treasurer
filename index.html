@@ -108,7 +108,7 @@
         data: ""
       }
       $scope.suggest = function() {
-        keen: { timestamp: new Date().toISOString() };
+        keen = { timestamp: new Date().toISOString() };
         client.addEvent("sugestions", angular.extend({}, $scope.suggestion, keen));
         alert("Thanks for your suggestion, "+$scope.suggestion.name+"!");
       }
